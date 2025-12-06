@@ -113,7 +113,7 @@ sendBtn.onclick=async()=>{
   const phone=phoneInput.value.trim();
   if(!phone.startsWith("+")) return show("Use full number with country code");
   try{
-    const res=await fetch("https://repairo-5ilt.onrender.com",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone})});
+    const res=await fetch("https://repairo-3.onrender.com/send-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone})});
     const data=await res.json();
     if(data.success) show("OTP sent!","green");
     else show("Failed to send OTP");
@@ -124,11 +124,11 @@ verifyBtn.onclick=async()=>{
   const phone=phoneInput.value.trim();
   const otp=otpInput.value.trim();
   try{
-    const res=await fetch("https://repairo-5ilt.onrender.com",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone,otp})});
+    const res=await fetch("https://repairo-3.onrender.com/verify-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone,otp})});
     const data=await res.json();
     if(data.success){
       show("OTP verified! Redirecting...","green");
-      setTimeout(()=>{if(isTech) window.location.href="tech-dashboard.html";else window.location.href="index.html";},800);
+      setTimeout(()=>{if(isTech) window.location.href="home.html";else window.location.href="index.html";},800);
     }else show("Invalid OTP");
   }catch(err){show("Error: "+err.message);}
 };
