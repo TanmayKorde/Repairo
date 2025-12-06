@@ -1,0 +1,102 @@
+<!-- save as admin-panel.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Repairo — Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand"><div class="logo-mark">A</div><div><div class="brand-title">Admin</div><div class="brand-sub">Repairo dashboard</div></div></div>
+      <nav class="main-nav"><a href="home.html">Home</a><a href="admin-panel.html">Admin</a><a href="technician-app.html">Tech</a></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Bookings</h2>
+      <div style="margin-top:12px">
+        <table class="admin-table" id="bkTable">
+          <thead><tr><th>ID</th><th>Service</th><th>Address</th><th>Date/Time</th><th>Tech</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:14px">
+      <h3>Technicians</h3>
+      <div id="techList" style="display:flex;gap:12px;margin-top:12px"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2025 Repairo</div>
+      <div class="footer-links"><a href="about.html">About</a> <a href="services.html">Services</a></div>
+    </div>
+  </footer>
+
+<script>
+const TECHS = [
+  {id:'t1',name:'Ravi',phone:'+91 90000',status:'online'},
+  {id:'t2',name:'Sunil',phone:'+91 90001',status:'idle'}
+];
+
+function renderTechs(){
+  const root = document.getElementById('techList'); root.innerHTML = '';
+  TECHS.forEach(t=>{
+    const d = document.createElement('div'); d.className='card'; d.style.minWidth='200px';
+    d.innerHTML = `<strong>${t.name}</strong><div class="muted">${t.phone}</div><div style="margin-top:8px"><div class="badge">${t.status}</div></div>`;
+    root.appendChild(d);
+  });
+}
+
+function renderBookings(){
+  const tbody = document.querySelector('#bkTable tbody');
+  const arr = JSON.parse(localStorage.getItem('repairo_bookings')||'[]');
+  tbody.innerHTML = '';
+  if(!arr.length){ tbody.innerHTML = '<tr><td colspan="7" class="muted">No bookings yet.</td></tr>'; return; }
+
+  arr.forEach(b=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${b.id}</td>
+      <td>${b.service}</td>
+      <td>${b.addr}</td>
+      <td>${b.date} ${b.time||''}</td>
+      <td>${b.technician||'—'}</td>
+      <td>${b.status}</td>
+      <td>
+        <button onclick="assign('${b.id}')">Assign</button>
+        <button onclick="setStatus('${b.id}','completed')">Complete</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function assign(bid){
+  const tech = prompt('Assign technician id (e.g. t1)');
+  if(!tech) return;
+  const arr = JSON.parse(localStorage.getItem('repairo_bookings')||'[]');
+  const i = arr.findIndex(x=>x.id===bid);
+  if(i===-1) return alert('Booking not found');
+  arr[i].technician = tech; arr[i].status = 'assigned';
+  localStorage.setItem('repairo_bookings', JSON.stringify(arr));
+  renderBookings();
+  alert('Assigned ' + tech);
+}
+function setStatus(id,st){
+  const arr = JSON.parse(localStorage.getItem('repairo_bookings')||'[]');
+  const i = arr.findIndex(x=>x.id===id);
+  if(i===-1) return alert('Not found');
+  arr[i].status = st;
+  localStorage.setItem('repairo_bookings', JSON.stringify(arr));
+  renderBookings();
+}
+
+renderTechs();
+renderBookings();
+</script>
+</body>
+</html>
