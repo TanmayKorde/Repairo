@@ -126,10 +126,15 @@ verifyBtn.onclick=async()=>{
   try{
     const res=await fetch("https://repairo-3.onrender.com/verify-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone,otp})});
     const data=await res.json();
-    if(data.success){
-      show("OTP verified! Redirecting...","green");
-      setTimeout(()=>{if(isTech) window.location.href="home.html";else window.location.href="index.html";},800);
-    }else show("Invalid OTP");
+   if (data.success) {
+  show("OTP verified! Redirecting...", "green");
+  setTimeout(() => {
+    window.location.href = "home.html";
+  }, 800);
+} else {
+  show("Invalid OTP");
+}
+
   }catch(err){show("Error: "+err.message);}
 };
 </script>
