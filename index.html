@@ -1,143 +1,256 @@
-
- <!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Repairo — OTP Auth</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- Tailwind CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-.fade { animation: fadeIn .35s ease-out; }
-@keyframes fadeIn { from {opacity:0} to {opacity:1} }
-@keyframes slowRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Repairo — Home Services, fast & trusted</title>
+  <meta name="description" content="Book electricians, plumbers, AC & appliance technicians near you. Vetted pros, transparent pricing, easy booking." />
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="relative min-h-screen bg-slate-100 dark:bg-slate-900 transition-all duration-300">
 
-<!-- Rotating Blurred Logo Background -->
-<div class="pointer-events-none fixed inset-0 flex justify-center items-center opacity-10">
-  <img src="C:\Users\user\OneDrive\Desktop\Repairo\repairologo.png"
-       class="w-[550px] h-[550px] blur-2xl select-none animate-[slowRotate_45s_linear_infinite]"
-       alt="">
-</div>
+<body>
 
-<!-- Main container -->
-<div class="min-h-screen flex flex-col justify-center items-center px-4">
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
 
-  <!-- Logo -->
-  <div class="mb-6 text-center">
-    <img src="repairologo.png" class="w-24 h-24 mx-auto">
-  </div>
+      <div class="brand">
+        <img src="logo.png" alt="Repairo logo" class="site-logo" />
+        <div>
+          <div class="brand-title">Repairo</div>
+          <div class="brand-sub">Home services • Verified pros</div>
+        </div>
+      </div>
 
-  <!-- Card -->
-  <div class="w-full max-w-md bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl fade">
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="about.html" class="nav-link">About</a>
+         <a href="technician-app.html" class="nav-link">About</a>
+        <button class="btn btn-ghost" id="openAdminTop">For Pros</button>
+        <button class="btn" id="openBookTop">Book Now</button>
+      </nav>
 
-    <h2 id="title" class="text-2xl font-bold text-teal-600 dark:text-teal-400 mb-4 text-center">Login with OTP</h2>
-
-    <!-- Name field (signup only) -->
-    <div id="nameBox" class="hidden">
-      <label class="text-sm text-gray-500 dark:text-gray-300">Full Name</label>
-      <input id="name" class="w-full p-2 mt-1 mb-3 rounded-lg border dark:bg-slate-700 dark:border-slate-600" placeholder="Your Name">
     </div>
+  </header>
 
-    <!-- Phone -->
-    <label class="text-sm text-gray-500 dark:text-gray-300">Phone (+91)</label>
-    <input id="phone" class="w-full p-2 mt-1 rounded-lg border dark:bg-slate-700 dark:border-slate-600" placeholder="+91 9876543210">
+  <!-- MAIN -->
+  <main>
 
-    <!-- OTP -->
-    <input id="otp" class="w-full p-2 rounded-lg border mt-4 dark:bg-slate-700 dark:border-slate-600" placeholder="Enter 6-digit OTP">
+    <!-- HERO -->
+    <section class="hero container">
+      <div class="hero-left">
+        <h1>Trusted technicians at your doorstep — same-day bookings available</h1>
+        <p class="lead">Plumbing, electrical, AC, appliance repair and more. Transparent pricing, verified reviews, and simple scheduling.</p>
 
-    <!-- Buttons -->
-    <button id="sendOtpBtn" class="w-full bg-teal-600 text-white p-2 rounded-lg mt-4">Send OTP</button>
-    <button id="verifyOtpBtn" class="w-full bg-teal-700 text-white p-2 rounded-lg mt-3">Verify OTP</button>
+        <div class="search-card">
+          <input id="heroSearch" type="search" placeholder="Search services, e.g. ‘tap repair’, ‘AC service’" />
+          <select id="heroCity">
+            <option>Choose city</option>
+            <option>Mumbai</option>
+            <option>Delhi</option>
+            <option>Bengaluru</option>
+            <option>Hyderabad</option>
+          </select>
+          <button class="btn" id="heroSearchBtn">Search</button>
+        </div>
 
-    <!-- Message -->
-    <p id="msg" class="text-center mt-3 text-sm"></p>
+        <ul class="trust-grid">
+          <li><strong>1M+</strong><span>Bookings</span></li>
+          <li><strong>4.8★</strong><span>Avg rating</span></li>
+          <li><strong>24/7</strong><span>Support</span></li>
+        </ul>
 
-    <!-- Toggle -->
-    <p class="text-center text-sm mt-4 text-gray-600 dark:text-gray-300">
-      <span id="toggleText">
-        New user? <b class="text-teal-600 cursor-pointer" onclick="switchToSignup()">Create account</b>
-      </span>
-    </p>
+        <div class="cta-row">
+          <button class="btn btn-large" id="heroBookBtn">Book a service</button>
+          <a href="#services" class="link-muted">See popular services</a>
+        </div>
+      </div>
 
-    <!-- Forgot password -->
-    <p class="text-center text-sm mt-3">
-      <b onclick="openForgot()" class="text-blue-600 cursor-pointer">Forgot Password?</b>
-    </p>
+      <div class="hero-right">
+        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=900&auto=format&fit=crop" alt="Technician working" />
+      </div>
+    </section>
 
-    <!-- Technician signup -->
-    <p class="text-center text-sm mt-4">
-      <b onclick="openTechSignup()" class="text-purple-600 cursor-pointer">Technician Signup</b>
-    </p>
+    <!-- POPULAR CATEGORIES -->
+    <section id="services" class="container section">
+      <h2>Popular categories</h2>
+      <div class="category-row" id="categoryRow"></div>
+    </section>
 
-    <!-- Dark mode -->
-    <button onclick="toggleDarkMode()" class="w-full mt-4 border p-2 rounded-lg text-sm dark:text-white">Toggle Dark Mode</button>
+    <!-- MOST BOOKED SERVICES -->
+    <section class="container section">
+      <div class="section-head">
+        <h2>Most Booked Services</h2>
+        <a href="services.html" class="link-muted">View all services</a>
+      </div>
 
+      <div class="services-grid" id="mostBooked"></div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="container section bg-card">
+      <div class="split">
+        <div>
+          <h3>How it works</h3>
+          <ol>
+            <li>Choose a service and pick a convenient slot.</li>
+            <li>We assign a nearby vetted technician.</li>
+            <li>Pay after the job or prepay for instant confirmation.</li>
+          </ol>
+        </div>
+
+        <div>
+          <h3>Why Repairo</h3>
+          <ul>
+            <li>Verified professionals</li>
+            <li>Transparent pricing & invoices</li>
+            <li>Secure payments & support</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="container section">
+      <h2>Customer reviews</h2>
+      <div class="reviews-grid">
+        <blockquote>“Booked an AC service — technician arrived on time, very professional.” <cite>— Neha</cite></blockquote>
+        <blockquote>“Quick plumbing fix, fair price.” <cite>— Raj</cite></blockquote>
+        <blockquote>“Excellent electrician, highly recommended.” <cite>— Amit</cite></blockquote>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2025 Repairo</div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="#">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOOKING MODAL -->
+  <div id="bookingModal" class="modal">
+    <div class="modal-dialog">
+      <button class="modal-close" id="bkClose">✕</button>
+      <h3>Book a service</h3>
+
+      <form id="bkForm">
+        <label>Service
+          <select id="bkService"></select>
+        </label>
+
+        <label>Date
+          <input type="date" id="bkDate" required>
+        </label>
+
+        <label>Address
+          <input type="text" id="bkAddr" placeholder="House no, street, city" required>
+        </label>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="bkCancel">Cancel</button>
+          <button type="submit" class="btn">Confirm booking</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 
-<!-- JS -->
-<script>
-let isSignup=false, isTech=false;
+  <!-- ADMIN PANEL -->
+  <div id="adminPanel" class="modal">
+    <div class="modal-dialog">
+      <button class="modal-close" id="adminClose">✕</button>
+      <h3>Admin — Bookings</h3>
+      <div id="adminList" style="max-height:320px;overflow:auto"></div>
+      <button class="btn btn-ghost" id="adminClose2">Close</button>
+    </div>
+  </div>
 
-function switchToSignup(){
-  isSignup=true; isTech=false;
-  document.getElementById("title").innerText="Create your Account";
-  document.getElementById("nameBox").classList.remove("hidden");
-  document.getElementById("toggleText").innerHTML=`Already have an account? <b class="text-teal-600 cursor-pointer" onclick="switchToLogin()">Login</b>`;
-}
-function switchToLogin(){
-  isSignup=false; isTech=false;
-  document.getElementById("title").innerText="Login with OTP";
-  document.getElementById("nameBox").classList.add("hidden");
-  document.getElementById("toggleText").innerHTML=`New user? <b class="text-teal-600 cursor-pointer" onclick="switchToSignup()">Create account</b>`;
-}
-function openTechSignup(){isTech=true;isSignup=false;document.getElementById("title").innerText="Technician Signup";document.getElementById("nameBox").classList.remove("hidden");document.getElementById("toggleText").innerHTML=`<b class='text-blue-600 cursor-pointer' onclick="switchToLogin()">Back to Login</b>`;}
-function openForgot(){alert("Forgot password works only for email-based login.");}
-function toggleDarkMode(){document.documentElement.classList.toggle("dark");localStorage.setItem("theme", document.documentElement.classList.contains("dark")?"dark":"light");}
+  <!-- SCRIPT -->
+  <script>
+    // CATEGORIES
+    const CATEGORIES = [
+      {id:'plumbing', name:'Plumbing', img:'https://images.unsplash.com/photo-1580906855283-20ec1d3f73a0'},
+      {id:'electric', name:'Electrician', img:'https://images.unsplash.com/photo-1581091012184-5c1a09c02036'},
+      {id:'ac', name:'AC & Appliance', img:'https://images.unsplash.com/photo-1606166325683-1ed308edcc81'},
+      {id:'carpentry', name:'Carpentry', img:'https://images.unsplash.com/photo-1598300056393-4cf8c8cd7c46'}
+    ];
 
-/* Twilio OTP Integration */
-const phoneInput=document.getElementById("phone");
-const otpInput=document.getElementById("otp");
-const msg=document.getElementById("msg");
-const sendBtn=document.getElementById("sendOtpBtn");
-const verifyBtn=document.getElementById("verifyOtpBtn");
+    // SERVICES (NO PRICE, NO RATING)
+    const SERVICES = [
+      {id:'tap_repair', name:'Tap/Leak repair', category:'plumbing'},
+      {id:'ac_service', name:'AC Full Service', category:'ac'},
+      {id:'wm_repair', name:'Washing machine repair', category:'ac'},
+      {id:'switch_replace', name:'Switch & Socket', category:'electric'},
+      {id:'door_fix', name:'Door hinge & repair', category:'carpentry'}
+    ];
 
-function show(m,color="red"){msg.innerText=m;msg.style.color=color;}
+    // LOAD CATEGORIES
+    const catRow = document.getElementById('categoryRow');
+    CATEGORIES.forEach(c => {
+      catRow.innerHTML += `
+        <a class="category-card" href="service-detail.html?id=${c.id}">
+          <img src="${c.img}" alt="${c.name}">
+          <div><strong>${c.name}</strong><span class="muted">Trusted pros</span></div>
+        </a>`;
+    });
 
-sendBtn.onclick=async()=>{
-  const phone=phoneInput.value.trim();
-  if(!phone.startsWith("+")) return show("Use full number with country code");
-  try{
-    const res=await fetch("https://repairo-3.onrender.com/send-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone})});
-    const data=await res.json();
-    if(data.success) show("OTP sent!","green");
-    else show("Failed to send OTP");
-  }catch(err){show("Error: "+err.message);}
-};
+    // MOST BOOKED SERVICES (CLEAN)
+    const mb = document.getElementById('mostBooked');
+    SERVICES.forEach(s => {
+      mb.innerHTML += `
+      <article class="service-card">
+        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=800&auto=format&fit=crop" alt="${s.name}" />
+        <div class="svc">
+          <h4>${s.name}</h4>
+          <p class="muted small">Vetted technicians</p>
+          <div class="svc-actions">
+            <button class="btn btn-ghost" onclick="openDetail('${s.id}')">Details</button>
+            <button class="btn" onclick="openBooking('${s.id}')">Book</button>
+          </div>
+        </div>
+      </article>`;
+    });
 
-verifyBtn.onclick=async()=>{
-  const phone=phoneInput.value.trim();
-  const otp=otpInput.value.trim();
-  try{
-    const res=await fetch("https://repairo-3.onrender.com/verify-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone,otp})});
-    const data=await res.json();
-   if (data.success) {
-  show("OTP verified! Redirecting...", "green");
-  setTimeout(() => {
-    window.location.href = "home.html";
-  }, 800);
-} else {
-  show("Invalid OTP");
-}
+    // BOOKING + ADMIN + SEARCH (unchanged)
+    const bookingModal = document.getElementById('bookingModal');
+    const bkService = document.getElementById('bkService');
+    const bkForm = document.getElementById('bkForm');
 
-  }catch(err){show("Error: "+err.message);}
-};
-</script>
+    function openBooking(id){
+      bkService.value = id;
+      bookingModal.style.display='flex';
+    }
+    window.openBooking = openBooking;
+
+    function openDetail(id){
+      location.href = 'service-detail.html?id=' + id;
+    }
+    window.openDetail = openDetail;
+
+    bkForm.addEventListener('submit', e => {
+      e.preventDefault();
+      alert("Booking created (demo).");
+      bookingModal.style.display='none';
+    });
+
+    document.getElementById('bkClose').onclick = () => bookingModal.style.display='none';
+    document.getElementById('bkCancel').onclick = () => bookingModal.style.display='none';
+
+    document.getElementById('openAdminTop').onclick = () => {
+      document.getElementById('adminPanel').style.display='flex';
+    };
+    document.getElementById('adminClose').onclick =
+    document.getElementById('adminClose2').onclick = () =>
+      document.getElementById('adminPanel').style.display='none';
+
+  </script>
 
 </body>
 </html>
