@@ -1,0 +1,100 @@
+<!-- save as booking.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Repairo — Booking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand"><div class="logo-mark">R</div><div><div class="brand-title">Repairo</div><div class="brand-sub">Book service</div></div></div>
+      <nav class="main-nav">
+        <a href="home.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="profile.html">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Book a service</h2>
+      <label>Service
+        <select id="serviceSelect"></select>
+      </label>
+      <label>Date
+        <input id="date" type="date">
+      </label>
+      <label>Time
+        <input id="time" type="time">
+      </label>
+      <label>Address
+        <input id="addr" placeholder="House no, street, area">
+      </label>
+      <label>Notes (optional)
+        <input id="notes" placeholder="Gate code, floor etc.">
+      </label>
+
+      <div style="display:flex;gap:12px;margin-top:12px">
+        <button class="btn" id="confirm">Confirm booking</button>
+        <button class="btn btn-ghost" id="cancel">Cancel</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2025 Repairo</div>
+      <div class="footer-links"><a href="about.html">About</a> <a href="services.html">Services</a></div>
+    </div>
+  </footer>
+
+<script>
+const SERVICES = [
+  {id:'tap_repair', name:'Tap/Leak repair', price:'₹99'},
+  {id:'ac_service', name:'AC Full Service', price:'₹899'},
+  {id:'wm_repair', name:'Washing machine repair', price:'₹249'},
+  {id:'switch_replace', name:'Switch & Socket', price:'₹149'}
+];
+
+const params = new URLSearchParams(location.search);
+const pre = params.get('service');
+
+const sel = document.getElementById('serviceSelect');
+SERVICES.forEach(s=>{
+  const o=document.createElement('option'); o.value=s.id; o.textContent = `${s.name} — ${s.price}`; sel.appendChild(o);
+});
+if(pre) sel.value = pre;
+
+document.getElementById('confirm').onclick = ()=>{
+  const booking = {
+    id: 'bk_' + Math.random().toString(36).slice(2,9),
+    service: sel.value,
+    date: (document.getElementById('date').value || new Date().toISOString().slice(0,10)),
+    time: document.getElementById('time').value || 'ASAP',
+    addr: document.getElementById('addr').value || '—',
+    notes: document.getElementById('notes').value || '',
+    created: new Date().toISOString(),
+    status: 'pending',
+    technician: null
+  };
+
+  // Naive tech assignment (first available) — replace with server logic
+  const TECHS = [{id:'t1',name:'Ravi'},{id:'t2',name:'Sunil'}];
+  const assigned = TECHS[0];
+  if(assigned){ booking.technician = assigned.id; booking.status = 'assigned'; booking.eta='25 mins'; }
+
+  const arr = JSON.parse(localStorage.getItem('repairo_bookings')||'[]');
+  arr.push(booking);
+  localStorage.setItem('repairo_bookings', JSON.stringify(arr));
+
+  alert('Booking created (demo): ' + booking.id);
+  location.href = 'tracking.html?booking=' + booking.id;
+};
+
+document.getElementById('cancel').onclick = ()=> location.href='services.html';
+</script>
+</body>
+</html>
