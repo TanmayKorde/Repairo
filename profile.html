@@ -1,0 +1,101 @@
+<!-- save as profile.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Repairo — Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand"><div class="logo-mark">R</div><div><div class="brand-title">Repairo</div><div class="brand-sub">Home services • Verified pros</div></div></div>
+      <nav class="main-nav">
+        <a href="home.html">Home</a>
+        <a href="services.html">Services</a>
+        <a class="active" href="profile.html">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Profile</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+        <label>Full name<input id="name" placeholder="Your name"></label>
+        <label>Phone<input id="phone" placeholder="+91 xxxxxxxxxx"></label>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:10px">
+        <button class="btn" id="saveBtn">Save</button>
+        <button class="btn btn-ghost" id="logoutBtn">Logout</button>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:16px">
+      <h3>My bookings</h3>
+      <div id="bookList" style="margin-top:12px"></div>
+    </section>
+
+    <section class="card" style="margin-top:16px">
+      <h3>Wishlist</h3>
+      <div id="favList" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2025 Repairo</div>
+      <div class="footer-links"><a href="about.html">About</a> <a href="services.html">Services</a></div>
+    </div>
+  </footer>
+
+<script>
+/* Load profile */
+const saved = JSON.parse(localStorage.getItem('repairo_profile')||'{}');
+if(saved.name) document.getElementById('name').value = saved.name;
+if(saved.phone) document.getElementById('phone').value = saved.phone;
+
+document.getElementById('saveBtn').onclick = ()=>{
+  const p = { name: document.getElementById('name').value || 'Guest', phone: document.getElementById('phone').value || ''};
+  localStorage.setItem('repairo_profile', JSON.stringify(p));
+  alert('Profile saved (demo)');
+};
+
+/* render bookings */
+function renderBookings(){
+  const list = JSON.parse(localStorage.getItem('repairo_bookings')||'[]').reverse();
+  const root = document.getElementById('bookList');
+  root.innerHTML = '';
+  if(!list.length) { root.innerHTML = '<div class="muted">No bookings yet.</div>'; return; }
+  list.forEach(b=>{
+    const div = document.createElement('div'); div.className='card'; div.style.display='flex'; div.style.justifyContent='space-between'; div.style.alignItems='center';
+    div.innerHTML = `<div><strong>${b.service}</strong><div class="muted">${b.addr} • ${b.date}</div></div>
+                     <div style="text-align:right"><div class="badge">${b.status}</div><div style="margin-top:8px"><button class="btn btn-ghost" onclick="view('${b.id}')">View</button></div></div>`;
+    root.appendChild(div);
+  });
+}
+function view(id){ location.href = 'tracking.html?booking='+id; }
+
+renderBookings();
+
+/* wishlist */
+function renderFavs(){
+  const favs = JSON.parse(localStorage.getItem('repairo_favs')||'[]');
+  const root = document.getElementById('favList'); root.innerHTML='';
+  if(!favs.length) { root.innerHTML = '<div class="muted">No wishlist yet.</div>'; return; }
+  favs.forEach(fid=>{
+    const d = document.createElement('div'); d.className='card'; d.style.width='200px';
+    d.innerHTML = `<div style="font-weight:700">${fid}</div><div class="muted">Demo item</div><div style="margin-top:8px"><button class="btn btn-ghost" onclick="removeFav('${fid}')">Remove</button></div>`;
+    root.appendChild(d);
+  });
+}
+function removeFav(id){
+  let favs = JSON.parse(localStorage.getItem('repairo_favs')||'[]');
+  favs = favs.filter(x=>x!==id);
+  localStorage.setItem('repairo_favs', JSON.stringify(favs));
+  renderFavs();
+}
+renderFavs();
+</script>
+</body>
+</html>
