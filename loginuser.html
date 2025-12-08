@@ -1,5 +1,4 @@
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -15,13 +14,13 @@
 @keyframes slowRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 </style>
 </head>
+
 <body class="relative min-h-screen bg-slate-100 dark:bg-slate-900 transition-all duration-300">
 
-<!-- Rotating Blurred Logo Background -->
+<!-- Background Blur Logo -->
 <div class="pointer-events-none fixed inset-0 flex justify-center items-center opacity-10">
   <img src="C:\Users\user\OneDrive\Desktop\Repairo\repairologo.png"
-       class="w-[550px] h-[550px] blur-2xl select-none animate-[slowRotate_45s_linear_infinite]"
-       alt="">
+       class="w-[550px] h-[550px] blur-2xl select-none animate-[slowRotate_45s_linear_infinite]">
 </div>
 
 <!-- Main container -->
@@ -35,12 +34,34 @@
   <!-- Card -->
   <div class="w-full max-w-md bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl fade">
 
-    <h2 id="title" class="text-2xl font-bold text-teal-600 dark:text-teal-400 mb-4 text-center">Login with OTP</h2>
+    <h2 id="title" class="text-2xl font-bold text-teal-600 dark:text-teal-400 mb-4 text-center">
+      Login with OTP
+    </h2>
 
-    <!-- Name field (signup only) -->
+    <!-- Name (Signup + Tech) -->
     <div id="nameBox" class="hidden">
       <label class="text-sm text-gray-500 dark:text-gray-300">Full Name</label>
       <input id="name" class="w-full p-2 mt-1 mb-3 rounded-lg border dark:bg-slate-700 dark:border-slate-600" placeholder="Your Name">
+    </div>
+
+    <!-- Technician Extra Fields -->
+    <div id="techFields" class="hidden">
+
+      <label class="text-sm text-gray-500 dark:text-gray-300">Aadhar Number</label>
+      <input id="aadhar" class="w-full p-2 mt-1 mb-3 rounded-lg border dark:bg-slate-700 dark:border-slate-600" placeholder="1234 5678 9012">
+
+      <label class="text-sm text-gray-500 dark:text-gray-300">Bank Account Number</label>
+      <input id="bankAcc" class="w-full p-2 mt-1 mb-3 rounded-lg border dark:bg-slate-700 dark:border-slate-600" placeholder="Account Number">
+
+      <label class="text-sm text-gray-500 dark:text-gray-300">Bank IFSC Code</label>
+      <input id="ifsc" class="w-full p-2 mt-1 mb-3 rounded-lg border dark:bg-slate-700 dark:border-slate-600" placeholder="IFSC Code (e.g., HDFC0001234)">
+
+      <!-- Photo Upload -->
+      <label class="text-sm text-gray-500 dark:text-gray-300">Upload Photo</label>
+      <input id="techPhoto" type="file" accept="image/*"
+             class="w-full p-2 mt-1 mb-3 rounded-lg border dark:bg-slate-700 dark:border-slate-600 cursor-pointer">
+
+      <img id="previewImg" class="hidden w-24 h-24 rounded-full object-cover mt-2 border">
     </div>
 
     <!-- Phone -->
@@ -69,13 +90,16 @@
       <b onclick="openForgot()" class="text-blue-600 cursor-pointer">Forgot Password?</b>
     </p>
 
-    <!-- Technician signup -->
+    <!-- Technician Signup -->
     <p class="text-center text-sm mt-4">
       <b onclick="openTechSignup()" class="text-purple-600 cursor-pointer">Technician Signup</b>
     </p>
 
     <!-- Dark mode -->
-    <button onclick="toggleDarkMode()" class="w-full mt-4 border p-2 rounded-lg text-sm dark:text-white">Toggle Dark Mode</button>
+    <button onclick="toggleDarkMode()"
+            class="w-full mt-4 border p-2 rounded-lg text-sm dark:text-white">
+      Toggle Dark Mode
+    </button>
 
   </div>
 </div>
@@ -86,56 +110,108 @@ let isSignup=false, isTech=false;
 
 function switchToSignup(){
   isSignup=true; isTech=false;
+
   document.getElementById("title").innerText="Create your Account";
   document.getElementById("nameBox").classList.remove("hidden");
-  document.getElementById("toggleText").innerHTML=`Already have an account? <b class="text-teal-600 cursor-pointer" onclick="switchToLogin()">Login</b>`;
+  document.getElementById("techFields").classList.add("hidden");
+
+  document.getElementById("toggleText").innerHTML =
+    `Already have an account? <b class="text-teal-600 cursor-pointer" onclick="switchToLogin()">Login</b>`;
 }
+
 function switchToLogin(){
   isSignup=false; isTech=false;
+
   document.getElementById("title").innerText="Login with OTP";
   document.getElementById("nameBox").classList.add("hidden");
-  document.getElementById("toggleText").innerHTML=`New user? <b class="text-teal-600 cursor-pointer" onclick="switchToSignup()">Create account</b>`;
-}
-function openTechSignup(){isTech=true;isSignup=false;document.getElementById("title").innerText="Technician Signup";document.getElementById("nameBox").classList.remove("hidden");document.getElementById("toggleText").innerHTML=`<b class='text-blue-600 cursor-pointer' onclick="switchToLogin()">Back to Login</b>`;}
-function openForgot(){alert("Forgot password works only for email-based login.");}
-function toggleDarkMode(){document.documentElement.classList.toggle("dark");localStorage.setItem("theme", document.documentElement.classList.contains("dark")?"dark":"light");}
+  document.getElementById("techFields").classList.add("hidden");
 
-/* Twilio OTP Integration */
+  document.getElementById("toggleText").innerHTML =
+    `New user? <b class="text-teal-600 cursor-pointer" onclick="switchToSignup()">Create account</b>`;
+}
+
+function openTechSignup(){
+  isTech=true; isSignup=false;
+
+  document.getElementById("title").innerText="Technician Signup";
+  document.getElementById("nameBox").classList.remove("hidden");
+  document.getElementById("techFields").classList.remove("hidden");
+
+  document.getElementById("toggleText").innerHTML =
+    `<b class='text-blue-600 cursor-pointer' onclick="switchToLogin()">Back to Login</b>`;
+}
+
+function openForgot(){
+  alert("Forgot password works only for email-based login.");
+}
+
+function toggleDarkMode(){
+  document.documentElement.classList.toggle("dark");
+  localStorage.setItem("theme",
+    document.documentElement.classList.contains("dark") ? "dark" : "light"
+  );
+}
+
+/* Photo Preview */
+const techPhoto=document.getElementById("techPhoto");
+const previewImg=document.getElementById("previewImg");
+
+if(techPhoto){
+  techPhoto.addEventListener("change", e=>{
+    const file=e.target.files[0];
+    if(file){
+      previewImg.src=URL.createObjectURL(file);
+      previewImg.classList.remove("hidden");
+    }
+  });
+}
+
+/* OTP System */
 const phoneInput=document.getElementById("phone");
 const otpInput=document.getElementById("otp");
 const msg=document.getElementById("msg");
-const sendBtn=document.getElementById("sendOtpBtn");
-const verifyBtn=document.getElementById("verifyOtpBtn");
 
-function show(m,color="red"){msg.innerText=m;msg.style.color=color;}
+function show(m,color="red"){ msg.innerText=m; msg.style.color=color; }
 
-sendBtn.onclick=async()=>{
+document.getElementById("sendOtpBtn").onclick=async()=>{
   const phone=phoneInput.value.trim();
   if(!phone.startsWith("+")) return show("Use full number with country code");
+
   try{
-    const res=await fetch("https://repairo-3.onrender.com/send-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone})});
+    const res=await fetch("https://repairo-3.onrender.com/send-otp",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({phone})
+    });
+
     const data=await res.json();
     if(data.success) show("OTP sent!","green");
     else show("Failed to send OTP");
-  }catch(err){show("Error: "+err.message);}
+  }
+  catch(err){ show("Error: "+err.message); }
 };
 
-verifyBtn.onclick=async()=>{
+document.getElementById("verifyOtpBtn").onclick=async()=>{
   const phone=phoneInput.value.trim();
   const otp=otpInput.value.trim();
-  try{
-    const res=await fetch("https://repairo-3.onrender.com/verify-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone,otp})});
-    const data=await res.json();
-   if (data.success) {
-  show("OTP verified! Redirecting...", "green");
-  setTimeout(() => {
-    window.location.href = "home.html";
-  }, 800);
-} else {
-  show("Invalid OTP");
-}
 
-  }catch(err){show("Error: "+err.message);}
+  try{
+    const res=await fetch("https://repairo-3.onrender.com/verify-otp",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({phone,otp})
+    });
+
+    const data=await res.json();
+
+    if(data.success){
+      show("OTP verified! Redirecting...","green");
+      setTimeout(()=>{ window.location.href="index.html"; },800);
+    } else {
+      show("Invalid OTP");
+    }
+  }
+  catch(err){ show("Error: "+err.message); }
 };
 </script>
 
