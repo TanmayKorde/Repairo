@@ -30,7 +30,7 @@
           <a href="about.html" class="nav-link">About</a>
         <a href="technician-app.html" class="nav-link">Technician</a>
         <a href="loginuser.html" class="nav-link">LOGIN</a>
-        <button class="btn btn-ghost" id="openAdminTop">For Pros</button>
+        <a href="admin-login.html" class="nav-link">admin-login</a>
         <button class="btn" id="openBookTop">Book Now</button>
       </nav>
 
@@ -207,9 +207,7 @@
 document.getElementById("openBookTop").onclick = () => {
   window.location.href = "booking.html";
 };
- document.getElementById('openAdminTop').onclick = () => {
-      window.location.href = "Admin-login.html";
-    };
+
   // Load logged-in user
 const user = JSON.parse(localStorage.getItem("repairo_user"));
 
@@ -264,7 +262,7 @@ if (user) {
     document.getElementById('bkClose').onclick = () => bookingModal.style.display='none';
     document.getElementById('bkCancel').onclick = () => bookingModal.style.display='none';
 
-   
+    
     document.getElementById('adminClose').onclick =
     document.getElementById('adminClose2').onclick = () =>
       document.getElementById('adminPanel').style.display='none';
