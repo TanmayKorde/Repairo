@@ -207,7 +207,9 @@
 document.getElementById("openBookTop").onclick = () => {
   window.location.href = "booking.html";
 };
-
+ document.getElementById('openAdminTop').onclick = () => {
+      window.location.href = "Admin-login.html";
+    };
   // Load logged-in user
 const user = JSON.parse(localStorage.getItem("repairo_user"));
 
@@ -262,9 +264,7 @@ if (user) {
     document.getElementById('bkClose').onclick = () => bookingModal.style.display='none';
     document.getElementById('bkCancel').onclick = () => bookingModal.style.display='none';
 
-    document.getElementById('openAdminTop').onclick = () => {
-      window.location.href = "Admin-login.html";
-    };
+   
     document.getElementById('adminClose').onclick =
     document.getElementById('adminClose2').onclick = () =>
       document.getElementById('adminPanel').style.display='none';
