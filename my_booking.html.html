@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Repairo — My Bookings</title>
-
+ <link rel="stylesheet" href="style.css">
   <style>
     body{margin:0;background:#f3f8f9;font-family:Inter;}
     .container{max-width:900px;margin:auto;padding:22px;}
@@ -22,10 +22,36 @@
 </head>
 
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <div class="brand">
+        <img src="repairologo.png" alt="Repairo logo" class="site-logo" />
+        <div>
+          <div class="brand-title">Repairo</div>
+          <div class="brand-sub">Home services • Verified pros</div>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="my_booking.html.html" class="nav-link">MY Booking </a>
+         <a href="tracking.html" class="nav-link">Tracking</a>
+          <a href="about.html" class="nav-link">About</a>
+        <a href="technician-app.html" class="nav-link">Technician</a>
+        <a href="loginuser.html" class="nav-link">LOGIN</a>
+        <button class="btn btn-ghost" id="openAdminTop">For Pros</button>
+        <button class="btn" id="openBookTop">Book Now</button>
+      </nav>
+
+    </div>
+  </header>
 <div class="container">
   <h2>My Bookings</h2>
   <div id="list"></div>
 </div>
+
 
 <script>
 const list = document.getElementById("list");
