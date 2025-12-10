@@ -25,8 +25,8 @@
       <nav class="main-nav">
         <a href="index.html" class="nav-link active">Home</a>
         <a href="services.html" class="nav-link">Services</a>
-        <a href="my_booking.html.html" class="nav-link">About</a>
-         <a href="tracking.html" class="nav-link">About</a>
+        <a href="my_booking.html.html" class="nav-link">MY Booking </a>
+         <a href="tracking.html" class="nav-link">Tracking</a>
           <a href="about.html" class="nav-link">About</a>
         <a href="technician-app.html" class="nav-link">Technician</a>
         <a href="loginuser.html" class="nav-link">LOGIN</a>
@@ -203,6 +203,10 @@
           <div><strong>${c.name}</strong><span class="muted">Trusted pros</span></div>
         </a>`;
     });
+
+document.getElementById("openBookTop").onclick = () => {
+  window.location.href = "booking.html";
+};
 
     // MOST BOOKED SERVICES (CLEAN)
     const mb = document.getElementById('mostBooked');
